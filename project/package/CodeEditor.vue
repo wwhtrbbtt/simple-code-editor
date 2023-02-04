@@ -97,16 +97,22 @@
 </template>
 
 <script>
-import hljs from "highlight.js";
-import Dropdown from "./Dropdown.vue";
-import CopyCode from "./CopyCode.vue";
+import hljs from 'highlight.js/lib/common';
+hljs.registerLanguage(
+  'plaintext',
+  import('highlight.js/lib/languages/plaintext')
+);
+hljs.registerLanguage('json', import('highlight.js/lib/languages/json'));
+
+import Dropdown from './Dropdown.vue';
+import CopyCode from './CopyCode.vue';
 
 export default {
   components: {
     Dropdown,
     CopyCode,
   },
-  name: "CodeEditor",
+  name: 'CodeEditor',
   props: {
     modelValue: {
       type: String,
@@ -129,15 +135,15 @@ export default {
     },
     value: {
       type: String,
-      default: "",
+      default: '',
     },
     width: {
       type: String,
-      default: "540px",
+      default: '540px',
     },
     height: {
       type: String,
-      default: "auto",
+      default: 'auto',
     },
     max_width: {
       type: String,
@@ -153,7 +159,7 @@ export default {
     },
     border_radius: {
       type: String,
-      default: "12px",
+      default: '12px',
     },
     language_selector: {
       type: Boolean,
@@ -163,19 +169,19 @@ export default {
       type: Array,
       default: function () {
         return [
-          ["javascript", "JS"],
-          ["cpp", "C++"],
-          ["python", "Python"],
+          ['javascript', 'JS'],
+          ['cpp', 'C++'],
+          ['python', 'Python'],
         ];
       },
     },
     selector_width: {
       type: String,
-      default: "110px",
+      default: '110px',
     },
     selector_height: {
       type: String,
-      default: "auto",
+      default: 'auto',
     },
     selector_displayed_by_default: {
       type: Boolean,
@@ -194,34 +200,34 @@ export default {
     },
     font_size: {
       type: String,
-      default: "17px",
+      default: '17px',
     },
     theme: {
       type: String,
-      default: "dark",
+      default: 'dark',
     },
   },
   directives: {
     highlight: {
       //vue2
       bind(el, binding) {
-        el.textContent = binding.value
-        hljs.highlightElement(el)
+        el.textContent = binding.value;
+        hljs.highlightElement(el);
       },
       componentUpdated(el, binding) {
-        el.textContent = binding.value
-        hljs.highlightElement(el)
+        el.textContent = binding.value;
+        hljs.highlightElement(el);
       },
       //vue3
       created(el, binding) {
-        el.textContent = binding.value
-        hljs.highlightElement(el)
+        el.textContent = binding.value;
+        hljs.highlightElement(el);
       },
       updated(el, binding) {
-        el.textContent = binding.value
-        hljs.highlightElement(el)
-      }
-    }
+        el.textContent = binding.value;
+        hljs.highlightElement(el);
+      },
+    },
   },
   data() {
     return {
@@ -241,17 +247,19 @@ export default {
   },
   watch: {
     value(value) {
-      this.staticValue = value
-    }
+      this.staticValue = value;
+    },
   },
   computed: {
     contentValue() {
-      return this.read_only ?
-        this.value : this.modelValue === undefined ?
-        this.staticValue + '\n' : this.modelValue + '\n'
+      return this.read_only
+        ? this.value
+        : this.modelValue === undefined
+        ? this.staticValue + '\n'
+        : this.modelValue + '\n';
     },
     canScroll() {
-      return this.height == "auto" ? false : true;
+      return this.height == 'auto' ? false : true;
     },
     withoutHeader() {
       if (this.hide_header == true) {
@@ -274,37 +282,37 @@ export default {
       this.containerWidth = event.target.clientWidth;
     },
     tab() {
-      document.execCommand("insertText", false, "    ");
+      document.execCommand('insertText', false, '    ');
     },
     scroll(event) {
       this.top = -event.target.scrollTop;
       this.left = -event.target.scrollLeft;
     },
-    resize(){
+    resize() {
       // listen to the change of the textarea's width to resize the highlight area
-      const resize = new ResizeObserver(entries => {
+      const resize = new ResizeObserver((entries) => {
         for (let entry of entries) {
-            const obj = entry.contentRect;
-            this.containerWidth = obj.width + 40  // 40 is the padding
+          const obj = entry.contentRect;
+          this.containerWidth = obj.width + 40; // 40 is the padding
         }
       });
       // only the textarea is rendered the listener will run
-      if(this.$refs.textarea){
+      if (this.$refs.textarea) {
         resize.observe(this.$refs.textarea);
       }
-    }
+    },
   },
   mounted() {
     this.$emit('lang', this.languages[0][0]);
     this.$emit('langs', this.languages);
-    this.$nextTick(function () { 
+    this.$nextTick(function () {
       this.content =
         this.modelValue === undefined ? this.staticValue : this.modelValue;
     });
-    this.resize()
+    this.resize();
   },
   updated() {
-    this.$emit('input', this.staticValue)
+    this.$emit('input', this.staticValue);
     this.$nextTick(function () {
       this.content =
         this.modelValue === undefined ? this.staticValue : this.modelValue;
