@@ -88,7 +88,7 @@
       >
         <code
             v-highlight="contentValue"
-            :class="languageClass"
+            :class="(count_lines) ? `${languageClass} count-lines`: languageClass"
             :style="{ top: top + 'px', left: left + 'px', fontSize: font_size, borderBottomLeftRadius: read_only == true ? border_radius : 0, borderBottomRightRadius: read_only == true ? border_radius : 0 }"
         ></code>
       </pre>
@@ -114,6 +114,10 @@ export default {
   },
   name: 'CodeEditor',
   props: {
+    count_lines:{
+      type: Boolean,
+      default: false
+    },
     modelValue: {
       type: String,
     },
@@ -392,6 +396,23 @@ export default {
   display: block;
   border: none;
   margin: 0;
+}
+
+.count-lines{
+  counter-reset: line;
+}
+
+.count-lines:deep(span:before){
+  counter-increment: line;
+}
+
+.count-lines:deep(span.hljs-tag:before){
+  content: counter(line);
+  position: absolute;
+  left: 1px;
+  font-size: 7px;
+  color: #777777;
+  padding-top: 4px;
 }
 
 /* hide_header */
