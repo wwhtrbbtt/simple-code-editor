@@ -98,12 +98,8 @@
 
 <script>
 import hljs from 'highlight.js/lib/common';
-hljs.registerLanguage(
-  'plaintext',
-  import('highlight.js/lib/languages/plaintext')
-);
-hljs.registerLanguage('json', import('highlight.js/lib/languages/json'));
-
+import json from 'highlight.js/lib/languages/json';
+hljs.registerLanguage('json', json);
 import Dropdown from './Dropdown.vue';
 import CopyCode from './CopyCode.vue';
 
@@ -114,9 +110,9 @@ export default {
   },
   name: 'CodeEditor',
   props: {
-    count_lines:{
+    count_lines: {
       type: Boolean,
-      default: false
+      default: false,
     },
     modelValue: {
       type: String,
@@ -398,15 +394,15 @@ export default {
   margin: 0;
 }
 
-.count-lines{
+.count-lines {
   counter-reset: line;
 }
 
-.count-lines:deep(span:before){
+.count-lines:deep(span:before) {
   counter-increment: line;
 }
 
-.count-lines:deep(span.hljs-tag:before){
+.count-lines:deep(span.hljs-tag:before) {
   content: counter(line);
   position: absolute;
   left: 1px;
