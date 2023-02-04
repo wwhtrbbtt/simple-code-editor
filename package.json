@@ -12,6 +12,12 @@
   },
   "keywords": [
     "code-editor",
+    "editor",
+    "highlight",
+    "coding",
+    "code block",
+    "code editor",
+    "CodeEditor",
     "vue"
   ],
   "author": "Vic",
@@ -19,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/justcaliturner/simple-code-editor/issues"
   },
-  "homepage": "https://simple-code-editor.vicuxd.com"
+  "homepage": "https://simple-code-editor.vicuxd.com",
+  "dependencies": {
+    "highlight.js": "^11.5.0"
+  }
 }
