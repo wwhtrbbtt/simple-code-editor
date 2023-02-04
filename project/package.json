@@ -1,6 +1,6 @@
 {
   "name": "simple-code-editor-website",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "keywords": [
     "code-editor",
     "vue"
@@ -8,7 +8,7 @@
   "homepage": "https://simple-code-editor.vicuxd.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/justcaliturner/simple-code-editor.git"
+    "url": "git+https://github.com/wwhtrbbtt/simple-code-editor.git"
   },
   "scripts": {
     "serve": "vue-cli-service serve",
